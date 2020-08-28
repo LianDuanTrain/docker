@@ -1,0 +1,11 @@
+3-2-3 Docker Command
+        docker container run 
+            -it  
+            --rm 
+            -d 
+            -p 8080:80 
+            --name web
+            jetty:9.4.31-jre8 
+<!--
+docker run -it  --rm -d -p 8080:80 --name web nginx 
+-->
