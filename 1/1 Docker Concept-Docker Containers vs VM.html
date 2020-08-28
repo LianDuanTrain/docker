@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .myDiv {        
+          text-align: center;
+          font-size: 40px;
+        }
+        </style>
+</head>
+<body>
+    <div class="myDiv">Docker Containers vs VM</div>
+    <div  class="myDiv"><img src="https://i1.wp.com/www.docker.com/blog/wp-content/uploads/Blog.-Are-containers-..VM-Image-1-1024x435.png?ssl=1" alt=""></div>
+    <!--
+    虚拟机它是虚拟了一个整个的操作系统在你的物理机器上, 所以他需要的内存硬盘和CPU资源是比Docker多的。
+    docker的容器是运行在docker的引擎上的，它需要的内存硬盘CPU资源比虚拟机较少。通常Docker启动速度是秒级的，然而虚拟的启动分钟级。
+    传统的软件开发中那我们大概分这么几步，首先是我们把我们的软件做成一个安装文件，然后由运维部门把这个安装文件安装到虚拟机或者物理机上，在安装过程中我们提供了相关的配置界面，同时我们还在安装程中把我们需要的一些依赖的库放操作系统中，这就是传统的安装方式正是这样的传统方式造成了很多的问题比，如说我们开发软人员开发的环境，QA的测试环境和运维环境，它的操作系统版本不一样或者操作系统打的补丁不一样都会造成各种各样奇怪问题，从而导致应用有问题。然而这种问题的排查比较不容易，尤其是当运维很多台机器的时候。
+    Docker出现就解决了这种问题，我们的应用软件，依赖的相关包和操作系统都放到了镜像里面，开发人员就把这个Docker镜像，发布给QA， QA测试后，发布给运维人员或者我们直接通过CICD pipeline直接进行发布到生产环境中去。
+    Docker这种特性就使得它非常适用于云的环境中，比如K8S或者Docker Swim。
+    这个当然Docker也不是万能的，比如它的安全性就不如虚拟机，因为它的引擎是运行在你的操作系统上面儿，你的应用可以通过Docker的引擎直接访问虚拟机上的的文件。
+    还有就是有一些场景不适合Docker比如数据库。
+    以上就是Docker和虚拟机的主要区别，和自他们适用的场景
+    -->
+</body>
+</html>
