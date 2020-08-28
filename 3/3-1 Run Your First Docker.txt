@@ -1,0 +1,12 @@
+3-1 Run Your First Docker
+    Start Up:
+        docker image pull jetty:9.4.31-jre8 
+        docker container run jetty:9.4.31-jre8 
+        docker container ps
+        docker container exec -it 2e341b6354df /bin/bash
+        curl localhost:8080
+    Stop and Clean Up:
+        docker container stop 76a5537219c4
+        docker container ls -a
+        docker container rm 76a5537219c4
+        docker rmi jetty:9.4.31-jre8
