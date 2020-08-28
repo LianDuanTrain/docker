@@ -1,0 +1,8 @@
+3-2-1 Contain Manage 
+         docker container run -d jetty:9.4.31-jre8 
+         docker container stop 
+         docker container kill 
+         docker container run -d jetty:9.4.31-jre8 --name web
+         docker container ls
+
+
