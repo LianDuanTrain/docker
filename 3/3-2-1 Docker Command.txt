@@ -1,0 +1,28 @@
+3-2-1 Docker Command
+        Command	                Description
+        docker image build  	Build an image from a Dockerfile
+        docker image history	Show the history of an image
+        docker image import	    Import the contents from a tarball to create a filesystem image
+        docker image inspect	Display detailed information on one or more images
+        docker image load	    Load an image from a tar archive or STDIN
+        docker image ls	        List images
+        docker image prune	    Remove unused images
+        docker image pull	    Pull an image or a repository from a registry
+        docker image push	    Push an image or a repository to a registry
+        docker image rm	        Remove one or more images
+        docker image save	    Save one or more images to a tar archive (streamed to STDOUT by default)
+        docker image tag	    Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE 
+        <!--
+            docker image history jetty:9.4.31-jre8 --no-trunc
+            docker image inspect 1c7d7a0099b5 -f '{{.RootFS.Layers}}‘
+            docker Image build这是build大会镜像的命令我们以后详细介绍
+            docker Image History和docker inspect稍后我会演示一个demo
+            docker load用来载入镜像包，docker import用来载入容器包，但两者都会恢复为镜像；
+            docker load不能对载入的镜像重命名，而docker import可以为镜像指定新名称。
+            docker images是列出本地的可以使用镜像。docker images有同样的功能。
+            docker prune是删除所有被没有被使用的镜像如果你的镜像正在被容器使用，镜像都不会删除的。
+            docker Image pull已经使用过了，一会我结合docker history 和docker inspect进行详细的介绍，
+            docker rm删除没有使用的镜像，如果镜像被容器使用时无法删除的。
+            docker Image tag这个命令用于在docker push 之前给镜像打标签使用
+            下面我们进行一个命令的demo
+        -->   
