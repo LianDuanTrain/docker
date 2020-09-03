@@ -1,16 +1,17 @@
 3-3 Docker Nework
     docker network ls
     docker run -itd --name test1 --network bridge --ip 172.17.0.10 centos:latest/bin/bash
+    
+    docker network create -d bridge my_bridge
+    
     docker network inspect bridge
     docker network create
     docker network prune
     docker network rm
-    https://www.cnblogs.com/awakenedy/articles/10937402.html
-    https://blog.csdn.net/Belug/article/details/75530627
-    https://blog.csdn.net/sbxwy/article/details/78962809
-    https://docs.docker.com/engine/tutorials/networkingcontainers/
+   
     
-    
+    https://juejin.im/post/6844903847383547911
+    https://my.oschina.net/thinwonton/blog/2993309
     bridge：桥接网络
 
 默认情况下启动的Docker容器，都是使用 bridge，Docker安装时创建的桥接网络，每次Docker容器重启时，会按照顺序获取对应的IP地址，这个就导致重启下，Docker的IP地址就变了
