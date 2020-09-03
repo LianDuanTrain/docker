@@ -1,5 +1,6 @@
 3-3 Docker Nework
     docker network ls
+    docker run -itd --name test1 --network bridge --ip 172.17.0.10 centos:latest/bin/bash
     docker network inspect bridge
     docker network create
     docker network prune
@@ -8,3 +9,25 @@
     https://blog.csdn.net/Belug/article/details/75530627
     https://blog.csdn.net/sbxwy/article/details/78962809
     https://docs.docker.com/engine/tutorials/networkingcontainers/
+    
+    
+    bridge：桥接网络
+
+默认情况下启动的Docker容器，都是使用 bridge，Docker安装时创建的桥接网络，每次Docker容器重启时，会按照顺序获取对应的IP地址，这个就导致重启下，Docker的IP地址就变了
+
+none：无指定网络
+
+使用 --network=none ，docker 容器就不会分配局域网的IP
+
+host： 主机网络
+
+使用 --network=host，此时，Docker 容器的网络会附属在主机上，两者是互通的。
+
+例如，在容器中运行一个Web服务，监听8080端口，则主机的8080端口就会自动映射到容器中。
+
+创建自定义网络：（设置固定IP）
+
+启动Docker容器的时候，使用默认的网络是不支持指派固定IP的，如下：
+~ docker run -itd --net bridge --ip 172.17.0.10 centos:latest/bin/bash
+6eb1f228cf308d1c60db30093c126acbfd0cb21d76cb448c678bab0f1a7c0df6
+docker: Error response from daemon: User specified IP address is supported on user defined networks only.
