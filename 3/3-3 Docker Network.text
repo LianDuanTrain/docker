@@ -34,6 +34,9 @@
             ping {containerName}  
             cat /etc/hosts
             cat /etc/resolv.conf 
+            docker network disconnect bridge alpine1
+            docker network disconnect bridge alpine2
+            docker network rm alpine-net
 
 
      
@@ -41,31 +44,10 @@
 
 
 
-docker network disconnect bridge alpine1
-        docker network disconnect bridge alpine2
 
-    docker run -itd --name test1 --network bridge --ip 172.17.0.10 centos:latest/bin/bash
-    
-    docker network create -d bridge my_bridge
-    
-    docker network inspect bridge
-    docker network create
-    docker network prune
-    docker network rm
+
    
-    
-    https://juejin.im/post/6844903847383547911
-    https://my.oschina.net/thinwonton/blog/2993309
-    bridge：桥接网络
-
-默认情况下启动的Docker容器，都是使用 bridge，Docker安装时创建的桥接网络，每次Docker容器重启时，会按照顺序获取对应的IP地址，这个就导致重启下，Docker的IP地址就变了
 
 
-启动Docker容器的时候，使用默认的网络是不支持指派固定IP的，如下：
-~ docker run -itd --net bridge --ip 172.17.0.10 centos:latest/bin/bash
-6eb1f228cf308d1c60db30093c126acbfd0cb21d76cb448c678bab0f1a7c0df6
-docker: Error response from daemon: User specified IP address is supported on user defined networks only.
 
-usermod -a -G docker lian
-chmod 666 /var/run/docker.sock
 
