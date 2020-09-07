@@ -1,5 +1,49 @@
 3-3 Docker Nework
-    docker network ls
+    Type:
+        bridge
+        host
+        overlay
+        macvlan
+        none
+        plugins
+    Commands:   
+        Default Bridge
+            Docker Network Image - http://img.scoop.it/bmExZyvGWidultcwx9hCb7nTzqrqzN7Y9aBZTaXoQ8Q=
+            docker network ls
+            docker network inspect bridge
+            docker run -itd --rm --name=alpine1 alpine 
+            docker run -itd --rm --name=alpine2 alpine
+            docker exec -it alpine1 /bin/sh
+            docker exec -it alpine2 /bin/sh
+            ping ip
+            ping {containerName}       
+            cat /etc/hosts
+            cat /etc/resolv.conf 
+            docker container stop alpine1
+            docker container stop alpine2
+
+        Create a Bridge
+            docker network create --driver bridge alpine-net
+            docker network inspect alpine-net
+            docker run -itd --rm --name=apline1 --network=alpine-net alpine
+            docker run -itd --rm --name=apline2 --network=alpine-net alpine
+            docker network inspect alpine-net
+            docker container attach  apline1  
+            docker container attach  apline2
+            ping ip
+            ping {containerName}  
+            cat /etc/hosts
+            cat /etc/resolv.conf 
+
+
+     
+
+
+
+
+docker network disconnect bridge alpine1
+        docker network disconnect bridge alpine2
+
     docker run -itd --name test1 --network bridge --ip 172.17.0.10 centos:latest/bin/bash
     
     docker network create -d bridge my_bridge
@@ -16,19 +60,12 @@
 
 默认情况下启动的Docker容器，都是使用 bridge，Docker安装时创建的桥接网络，每次Docker容器重启时，会按照顺序获取对应的IP地址，这个就导致重启下，Docker的IP地址就变了
 
-none：无指定网络
-
-使用 --network=none ，docker 容器就不会分配局域网的IP
-
-host： 主机网络
-
-使用 --network=host，此时，Docker 容器的网络会附属在主机上，两者是互通的。
-
-例如，在容器中运行一个Web服务，监听8080端口，则主机的8080端口就会自动映射到容器中。
-
-创建自定义网络：（设置固定IP）
 
 启动Docker容器的时候，使用默认的网络是不支持指派固定IP的，如下：
 ~ docker run -itd --net bridge --ip 172.17.0.10 centos:latest/bin/bash
 6eb1f228cf308d1c60db30093c126acbfd0cb21d76cb448c678bab0f1a7c0df6
 docker: Error response from daemon: User specified IP address is supported on user defined networks only.
+
+usermod -a -G docker lian
+chmod 666 /var/run/docker.sock
+

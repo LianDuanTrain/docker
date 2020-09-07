@@ -31,7 +31,7 @@ Container Management
         docker container stop web
         docker container ls -a
     Inspect
-        docker container run -d --name web jetty:9.4.31-jre8      
+        docker container run -d --rm --name web jetty:9.4.31-jre8      
         docker container inspect web   --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
         docker container inspect web >inspect.log
         cat inspect.log  | grep IP 
