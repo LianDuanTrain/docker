@@ -1,45 +1,34 @@
-当该容器不再运行时，数据将不会持久存储，如果另一个进程需要它，就很难将数据从容器中取出。
-容器的可写层与 Docker Host 在容器运行时紧密耦合，你不能轻易地把数据移到别的地方。
-写入容器的可写层需要一个 storage driver 来管理。storage driver 使用 Linux 内核提供一个文件系统。与使用直接写入宿主文件系统的 volume 相比，这种额外的抽象降低了性能。
+Volumes
 https://docs.docker.com/storage/images/types-of-mounts.png
-Mount Type:
-    volumes
-    bind mounts
-    tmpfs
-Command:
-Bind mounts
-    --mount type=bind,source="$(pwd)"/html,target=/usr/share/nginx/html/ 
-    docker run -d -it --name myNginx -p 7777:80 --rm --mount type=bind,source="$(pwd)"/html,target=/usr/share/nginx/html/ nginx:latest
-    docker inspect myNginx
-    docker exec -it myNginx /bin/bash
-    docker container stop myNginx
-    docker run -d -it --name myNginx -p 7777:80 --rm --mount type=bind,source="$(pwd)"/html2,target=/usr/share/nginx/html/ nginx:latest
+    Mount Type:
+        bind mounts
+        volumes
+        tmpfs
+    Command:
+    Bind mounts
+        --mount type=bind,source="$(pwd)"/html,target=/usr/share/nginx/html/ 
+        docker run -d -it --name myNginx -p 7777:80 --rm --mount type=bind,source="$(pwd)"/html,target=/usr/share/nginx/html/ nginx:latest
+        docker inspect myNginx
+        docker exec -it myNginx /bin/bash
+        docker container stop myNginx
+        docker run -d -it --name myNginx -p 7777:80 --rm --mount type=bind,source="$(pwd)"/html2,target=/usr/share/nginx/html/ nginx:latest
+        docker run -d -it --name myNginx -p 7777:80 --rm --mount type=bind,source="$(pwd)"/html2,target=/usr/share/nginx/html/,readonly nginx:latest
 
-Volume
-    docker volume create htmlContent
-    docker volume ls
-    docker volume inspect htmlContent
-    docker volume rm htmlContent
-    docker run -d -it --name myNginx -p 7777:80 --rm --mount source=htmlContent,target=/usr/share/nginx/html/ nginx:latest
-    docker inspect myNginx
-    docker exec -it myNginx /bin/bash
-    curl 10.39.174.9:7777/index.html
-    docker container stop myNginx
-    docker run -d -it --name myNginx -p 7777:80 --rm --mount source=htmlContent2,target=/usr/share/nginx/html/ nginx:latest
-    docker volume ls
-    docker volume inspect htmlContent
-    docker container stop myNginx
-tmpfs 
-   docker run -d -it --name myNginx -p 7777:80 --rm --mount type=tmpfs,target=/app nginx:latest   
-   docker inspect myNginx
-   docker container stop myNginx
-
-Data Container
-   docker run -d -it --name dataContainer   --rm --mount type=bind,source="$(pwd)"/html,target=/usr/share/nginx/html/ alpine:latest
-   docker exec -it dataContainer /bin/sh
-   docker container run -d --volumes-from dataContainer  -p 7777:80 --rm --name myNginx nginx:latest
-   docker container stop dataContainer
-   docker container stop  myNginx
-   https://hackernoon.com/docker-data-containers-cb250048d162
-   
-https://docs.docker.com/storage/storagedriver/
+    Volume
+        docker volume create htmlContent
+        docker volume ls
+        docker volume inspect htmlContent    
+        docker run -d -it --name myNginx -p 7777:80 --rm --mount source=htmlContent,target=/usr/share/nginx/html/ nginx:latest
+        docker inspect myNginx
+        docker exec -it myNginx /bin/bash
+        curl 172.17.0.2:80/index.html
+        docker container stop myNginx
+        docker run -d -it --name myNginx -p 7777:80 --rm --mount source=htmlContent2,target=/usr/share/nginx/html/ nginx:latest
+        docker volume ls
+        docker volume inspect htmlContent2
+        docker container stop myNginx
+        docker volume rm htmlContent
+    tmpfs 
+       docker run -d -it --name myNginx -p 7777:80 --rm --mount type=tmpfs,target=/app nginx:latest   
+       docker inspect myNginx
+       docker container stop myNginx  
