@@ -1,0 +1,10 @@
+4-1 Create Private Docker Repository
+    docker pull registry
+        vim /etc/docker/daemon.json
+        add "insecure-registries":["yout box IP:5000"]
+        Reload and Restart Docker
+            systemctl restart docker
+            systemctl status docker
+        docker container run -d --name localDockerRegistry --restart=always -p 5000:5000 -v /home/liaduan/LocalDockerRegistry:/var/lib/registry registry
+        
+        Mount /home/liafuan/LocalDockerRegistry to /var/lib/registry to keep  data persistent after Docker restart

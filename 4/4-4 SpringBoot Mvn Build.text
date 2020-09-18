@@ -1,0 +1,32 @@
+4-4 SpringBoot Build
+        docker pull maven:3.6-jdk-8-openj9
+        docker container run -it --name mvn001 \
+            -v /home/k8suser/mvn:/usr/src/mymaven \
+            -w /usr/src/mymaven maven:3.6-jdk-8-openj9 \
+            mvn clean package  -U -DskipTests 
+
+        docker container run -it --name mvn002 \
+            --user="lian"
+            -v /home/k8suser/mvn:/usr/src/mymaven \
+            -w /usr/src/mymaven maven:3.6-jdk-8-openj9 \
+            mvn clean package -U -DskipTests=true   
+        docker start mvn001
+        docker logs -f mvn001
+    DockerFile
+        #
+        # Build stage
+        #
+        FROM maven:3.6-jdk-8-openj9 AS build
+        COPY src /home/app/src
+        COPY pom.xml /home/app
+        RUN mvn -f -DskipTests=true /home/app/pom.xml clean package
+
+        #
+        # Package stage
+        #
+        FROM openjdk:8-jre-slim
+        COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
+        EXPOSE 8080
+        ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
+
+    

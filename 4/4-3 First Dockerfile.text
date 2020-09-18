@@ -1,0 +1,15 @@
+4-3 First Dockerfile
+mkdir mynginx
+cd mynginx
+touch Dockerfile
+Dockerfile
+    FROM nginx
+    RUN echo '<h1>Hello, mynginx!</h1>' > /usr/share/nginx/html/index.html
+docker build -t myNginx:v1 .    
+docker tag myNginx:v1 10.39.174.9:5000/myNginx:v1
+docker push 10.39.174.9:5000/myNginx:v1
+Check  Private Docker Repository
+    curl -XGET http://10.39.174.9:5000/v2/_catalog
+    curl -XGET http://10.39.174.9:5000/v2/_catalog
+    curl -XGET http://10.39.174.9:5000/v2/{image}/tags/list
+    curl -X DELETE http://10.39.174.9:5000/v2/repositories/library/{image}/tags/v1

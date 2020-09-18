@@ -1,0 +1,12 @@
+4-2 Image Management
+docker images
+docker image ls
+docker image inspect
+docker image history
+docker image prune
+docker image rm
+docker image tag
+docker pull
+docker image build
+docker push
+
