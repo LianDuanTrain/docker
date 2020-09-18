@@ -1,15 +1,20 @@
 4-3 First Dockerfile
-mkdir mynginx
+mkdir mynginx 
 cd mynginx
 touch Dockerfile
 Dockerfile
-    FROM nginx
+    FROM nginx:1.19.2
+	MAINTAINER  Lian
+	LABEL version="1.0" description="Test Build Docker Image" by="Lian"
     RUN echo '<h1>Hello, mynginx!</h1>' > /usr/share/nginx/html/index.html
-docker build -t myNginx:v1 .    
-docker tag myNginx:v1 10.39.174.9:5000/myNginx:v1
-docker push 10.39.174.9:5000/myNginx:v1
+	
+docker build -t mynginx:v1 . 
+   
+docker tag myNginx:v1 10.39.174.9:5000/mynginx:v1
+docker push 10.39.174.9:5000/mynginx:v1
+
 Check  Private Docker Repository
-    curl -XGET http://10.39.174.9:5000/v2/_catalog
-    curl -XGET http://10.39.174.9:5000/v2/_catalog
-    curl -XGET http://10.39.174.9:5000/v2/{image}/tags/list
-    curl -X DELETE http://10.39.174.9:5000/v2/repositories/library/{image}/tags/v1
+    curl -XGET http://localhost:5000/v2/_catalog
+    curl -XGET http://localhost:5000/v2/_catalog
+    curl -XGET http://localhost:5000/v2/{image}/tags/list
+    curl -X DELETE http://localhost:5000/v2/repositories/library/{image}/tags/v1

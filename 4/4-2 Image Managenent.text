@@ -1,8 +1,9 @@
 4-2 Image Management
 docker images
 docker image ls
-docker image inspect
-docker image history
+docker image inspect mynginx:v1
+docker image inspect nginx:1.19.2
+docker image history nginx:1.19.2
 docker image prune
 docker image rm
 docker image tag

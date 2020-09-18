@@ -12,14 +12,15 @@
             mvn clean package -U -DskipTests=true   
         docker start mvn001
         docker logs -f mvn001
-    DockerFile
+	docker build -t mvnbuild:v1 .
+    Dockerfile
         #
         # Build stage
         #
         FROM maven:3.6-jdk-8-openj9 AS build
         COPY src /home/app/src
         COPY pom.xml /home/app
-        RUN mvn -f -DskipTests=true /home/app/pom.xml clean package
+        RUN mvn -U -DskipTests=true /home/app/pom.xml clean package
 
         #
         # Package stage
