@@ -25,8 +25,15 @@
         # Package stage
         #
         FROM openjdk:8-jre-slim
-        COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
-        EXPOSE 8080
-        ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
+        ENV APP_HOME /usr/local/jetty
+        ENV PORT 8080
+        COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar $APP_HOME/demo.jar
+        RUN 	groupadd -r app && useradd -r -g app app ; \
+	            chown -R app:jetty "$JETTY_HOME" "$JETTY_BASE" "$TMPDIR" ; \
+                RUN apt-get update \
+                && apt-get install -qq -y 
+        EXPOSE $PORT
+        USER app
+        ENTRYPOINT ["java","-jar","$APP_HOME/demo.jar"]
 
     
