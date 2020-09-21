@@ -1,27 +1,33 @@
 4-3 First Dockerfile
-mkdir mynginx 
-cd mynginx
-touch Dockerfile
-Dockerfile
-    FROM nginx:1.19.2
-    RUN echo '<h1>Hello, mynginx!</h1>' > /usr/share/nginx/html/index.html	
-docker build -t mynginx:v1 .    
-docker tag mynginx:v1 192.168.31.197:5000/mynginx:v1
-docker push 192.168.31.197:5000/mynginx:v1
-docker image inspect mynginx:v1
+Create a Image
+    mkdir mynginx 
+    cd mynginx
+    touch Dockerfile
+    Dockerfile
+        FROM nginx:1.19.2
+        RUN echo '<h1>Hello, mynginx!</h1>' > /usr/share/nginx/html/index.html	
+    docker build -t dl0218/mynginx:v1 .    
+Push Image
+    docker-hub
+        docker login
+        docker push<hub-user>/<repo-name>:<tag>
+        docker push dl0218/mynginx:v1
+    Private Docker Repository
+        docker tag dl0218/mynginx:v1 192.168.31.197:5000/mynginx:v1
+        docker push 192.168.31.197:5000/mynginx:v1
+        curl -XGET http://localhost:5000/v2/_catalog
+        curl -XGET http://localhost:5000/v2/_catalog
+        curl -XGET http://localhost:5000/v2/{image}/tags/list
+        curl -X DELETE http://localhost:5000/v2/repositories/library/{image}/tags/v1
+Image inspect        
+    docker image inspect mynginx:v1
+    Dockerfile
+        FROM nginx:1.19.2
+        MAINTAINER  Lian
+        LABEL version="1.0" description="Test Build Docker Image" by="Lian"
+        RUN echo '<h1>Hello, mynginx!</h1>' > /usr/share/nginx/html/index.html
+    docker build -t mynginx:v2 . 
+    docker tag mynginx:v1 192.168.31.197:5000/mynginx:v2
+    docker push 192.168.31.197:5000/mynginx:v2
+    docker image inspect mynginx:v2
 
-Dockerfile
-    FROM nginx:1.19.2
-	MAINTAINER  Lian
-	LABEL version="1.0" description="Test Build Docker Image" by="Lian"
-    RUN echo '<h1>Hello, mynginx!</h1>' > /usr/share/nginx/html/index.html
-docker build -t mynginx:v2 . 
-docker tag mynginx:v1 192.168.31.197:5000/mynginx:v2
-docker push 192.168.31.197:5000/mynginx:v2
-docker image inspect mynginx:v2
-
-Check  Private Docker Repository
-    curl -XGET http://localhost:5000/v2/_catalog
-    curl -XGET http://localhost:5000/v2/_catalog
-    curl -XGET http://localhost:5000/v2/{image}/tags/list
-    curl -X DELETE http://localhost:5000/v2/repositories/library/{image}/tags/v1
