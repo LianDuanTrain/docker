@@ -31,7 +31,6 @@ MicrosserviceDockerFile
     # Below format ENTRYPOINT does not support the ENV parameter 
     # ENTRYPOINT ["java","-jar","${APP_Home}/${APP_Name}"]
     ENTRYPOINT java -jar ${APP_Name}
-    #CMD java -jar ${APP_Name}
 
 docker build --build-arg jarName=demo.jar -f MicrosserviceDockerFile  -t microsservic:v1 . 
  
