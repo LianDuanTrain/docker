@@ -1,4 +1,5 @@
 Docker CMD
+COPY --from=build
 
 TwoStagesDockerFile
     #
@@ -27,6 +28,9 @@ TwoStagesDockerFile
     ENV APP_Build_Home=/home/build
     ARG jarName=demo.jar 
     ENV APP_Name=${jarName}  
+    # OS update
+    ARG DEBIAN_FRONTEND=noninteractive
+    RUN apt-get update && apt-get install --assume-yes apt-utils;
     COPY ${APP_Name} ${APP_Home}/${APP_Name}
     COPY --from=build ${APP_Build_Home}/target/demo-0.0.1-SNAPSHOT.jar ${APP_Home}/${APP_Name}
     RUN groupadd -r microservice && useradd -r -g microservice microservice ; \
