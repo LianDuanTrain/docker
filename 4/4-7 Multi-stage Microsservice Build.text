@@ -1,6 +1,6 @@
 Docker CMD
-COPY --from=build
-
+FROM XXXX AS stage name
+COPY --from=stage name
 TwoStagesDockerFile
     #
     # Microservice Build  
@@ -40,11 +40,10 @@ TwoStagesDockerFile
     EXPOSE 9999
     ENTRYPOINT java -jar ${APP_Name}
 
-docker build --build-arg jarName=demo.jar -f TwoStagesDockerFile  -t microsservic:v3 . 
-docker build --build-arg jarName=demo.jar -f MicrosserviceDockerFile  -t microsservic:v1 .
-docker container run -d --name microsservicv3  -p 9999:9999  microsservic:v3
+docker build --build-arg jarName=demo.jar -f TwoStagesDockerFile  -t microsservic:v4 . 
+docker container run -d --name microsservicv4  -p 9999:9999  microsservic:v4
 
-docker exec -it microsservicV3 /bin/sh
-docker container rm -f microsservicv3
-docker logs microsservicv3 
+docker exec -it microsservicV4 /bin/sh
+docker container rm -f microsservicv4
+docker logs microsservicv4
     
