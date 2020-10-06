@@ -1,5 +1,6 @@
-
-version: "3.3"
+5-3 ENV of Docker Compose
+docker-composeV1.yml
+version: "3.7"
 services:
     jetty-war-data:
         build: ./warData
@@ -10,7 +11,8 @@ services:
             - war-data:/var/lib/jetty/webapps  
     jetty-app:
         container_name: jetty9431v1
-        image: jetty:9.4.31-jdk8-slim
+        image: ${IMAGETAG:-jetty:9.4.31-jdk8-slim} 
+        #jetty:9.4.31-jdk8-slim
         networks:
             - webNet
         depends_on:
@@ -27,37 +29,19 @@ networks:
     webNet:  
     dataNet:    
 
-docker-compose  up -d
+docker-compose -f  docker-composeV1.yml up  -d 
 docker-compose ps
 
-docker exec -it -u root jetty9431v1 /bin/bash
-    apt-get update && apt-get install iputils-ping 
-docker exec -it -u root  wardatav1 /bin/sh
-    apk add --no-cache ping
-
-docker container inspect jetty9431v1
-docker container inspect wardatav1
-docker network ls
-docker network inspect dockercompose_dataNet
-docker network inspect dockercompose_webNet
-
-
-
-docker volume rm dockercompose_war-data
-
-docker-compose build --no-cache
-
-docker-compose down && docker-compose build --no-cache && docker-compose up
-
+docker exec -it -u jetty jetty9431v1 /bin/sh
+docker exec -it  wardatav1 /bin/sh
+docker container stop wardata
+docker-compose  up -d --build 
 docker-compose down -v
+
+docker-compose down -v && docker-compose build --no-cache && docker-compose up
 
 Test:
     curl -H "Accept: application/json" -H "Content-type: application/json" -d '{"lastName":"AA3","firstName":"BB3"}' -X POST 192.168.31.197:8080/demo/users
     curl 192.168.31.197:8080/demo/users
 
 
-
-
- WARNING: Image for service jetty-war-data was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
-
-https://www.cnblogs.com/sparkdev/p/9826520.html
