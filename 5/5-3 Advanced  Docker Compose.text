@@ -1,4 +1,4 @@
-5-3 ENV of Docker Compose
+5-3 Advanced  Docker Compose
 docker-composeV1.yml
 version: "3.7"
 services:
@@ -31,6 +31,8 @@ networks:
 
 docker-compose -f  docker-composeV1.yml up  -d 
 docker-compose ps
+
+
 Config Merge:
     docker-compose -f  docker-composeV1.yml -f  docker-compose-qaV1.yml  up  -d 
 docker exec -it -u jetty jetty9431v1 /bin/sh
