@@ -5,16 +5,14 @@ https://www.composerize.com/
 
 docker container run -d --name microsservicv1 --rm -p 9999:9999  microsservic:v1 
 
-cp -r mvn compose
-
 docker-compose.yml
-version: '3'
+version: '3.3'
 services:
-  microsservicv1:
-    container_name: microsservicv1
-    image: microsservic:v1
-    ports:
-    - 9999:9999
+    myapp:
+        container_name: microsservicv1
+        ports:
+            - '9999:9999'
+        image: 'microsservic:v1'
 
 
 docker-compose up -d
@@ -29,7 +27,7 @@ https://docs.docker.com/compose/compose-file/
 docker-composeV1.yml
 version: '3'
 services:
-  microsservicv1:
+  myapp:
     build:
      context: .
      dockerfile: MicrosserviceDockerFileV1
@@ -37,12 +35,8 @@ services:
     ports:
     - 9999:9999
 
-
-docker-compose -f docker-composev1.yml up -d
-docker-compose ps
-docker-compose -f docker-composev1.yml up --build -d
-docker-compose rm microsservicv1
+docker-compose -f docker-composeV1.yml up -d
+docker-compose -f docker-composeV1.yml  down
 
 
-docker run --name redis  -p 6379:6379 -d redis redis-server --appendonly yes
 

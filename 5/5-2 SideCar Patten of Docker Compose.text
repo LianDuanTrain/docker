@@ -1,4 +1,41 @@
+Sidecar Pattern
+Dockerfile
+docker-compose.yml
+    Docker network
+    Docker volumes
 
+Dockerfile
+    #
+    # Microservice Build  as War
+    #
+    FROM maven:3.6-jdk-8-openj9 AS build
+    LABEL version="1.0" description="Microservice build by Maven" by="Lian"  
+    ENV APP_Build_Home=/home/build
+    COPY src ${APP_Build_Home}/src
+    COPY pom.xml ${APP_Build_Home}
+    RUN groupadd -r build && useradd -r -g build build ; \
+	chown -R build:build "${APP_Build_Home}"; 
+    USER build
+    WORKDIR ${APP_Build_Home}
+    RUN mvn -U -DskipTests=true -f pom.xml clean package
+    #
+    # War file Container
+    #
+    FROM gliderlabs/alpine:3.9
+    LABEL version="1.0" description="War file Container" by="Lian"
+    #Default value
+    ENV APP_Home=/var/lib/jetty/webapps
+    ENV APP_Build_Home=/home/build
+    ARG jarName=demo.jar 
+    ENV APP_Name=${jarName}  
+    RUN apk add --no-cache bash
+    RUN mkdir -p /var/lib/jetty/webapps
+    COPY --from=build ${APP_Build_Home}/target/demo.war ${APP_Home}/${APP_Name}
+    VOLUME  ${APP_Home}
+    ENTRYPOINT /usr/bin/tail -f /dev/null
+
+
+docker-compose.yml
 version: "3.3"
 services:
     jetty-war-data:
@@ -10,7 +47,7 @@ services:
             - war-data:/var/lib/jetty/webapps  
     jetty-app:
         container_name: jetty9431v1
-        image: jetty:9.4.31-jdk8-slim
+        image: jetty:9.4-jre8-slim
         networks:
             - webNet
         depends_on:
@@ -32,6 +69,7 @@ docker-compose ps
 
 docker exec -it -u root jetty9431v1 /bin/bash
     apt-get update && apt-get install iputils-ping 
+    apt-get install net-tools
 docker exec -it -u root  wardatav1 /bin/sh
     apk add --no-cache ping
 
@@ -47,7 +85,7 @@ docker volume rm dockercompose_war-data
 
 docker-compose build --no-cache
 
-docker-compose down && docker-compose build --no-cache && docker-compose up
+docker-compose down -v && docker-compose build --no-cache && docker-compose up
 
 docker-compose down -v
 

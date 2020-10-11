@@ -31,7 +31,8 @@ networks:
 
 docker-compose -f  docker-composeV1.yml up  -d 
 docker-compose ps
-
+Config Merge:
+    docker-compose -f  docker-composeV1.yml -f  docker-compose-qaV1.yml  up  -d 
 docker exec -it -u jetty jetty9431v1 /bin/sh
 docker exec -it  wardatav1 /bin/sh
 docker container stop wardata
