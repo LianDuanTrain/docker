@@ -28,23 +28,29 @@ volumes:
 networks:
     webNet:  
     dataNet:    
+CMD:
+    docker-compose -f  docker-composeV1.yml up  -d 
+    docker-compose ps
+    docker-compose -f docker-composeV1.yml down -v  
+.env file content:
+    IMAGETAG=jetty:9.4-jre8-slim
+CMD:
+    docker-compose -f  docker-composeV1.yml up  -d 
 
-docker-compose -f  docker-composeV1.yml up  -d 
-docker-compose ps
 
-
-Config Merge:
+Docker-compose files Merge:
     docker-compose -f  docker-composeV1.yml -f  docker-compose-qaV1.yml  up  -d 
-docker exec -it -u jetty jetty9431v1 /bin/sh
-docker exec -it  wardatav1 /bin/sh
-docker container stop wardata
-docker-compose  up -d --build 
-docker-compose down -v
-
-docker-compose down -v && docker-compose build --no-cache && docker-compose up
+    docker exec -it -u jetty jetty9431v1 /bin/sh
+    docker exec -it  wardatav1 /bin/sh
+    docker container stop wardata
+    docker-compose  up -d --build 
+    docker-compose down -v
+    docker-compose down -v && docker-compose build --no-cache && docker-compose up
 
 Test:
-    curl -H "Accept: application/json" -H "Content-type: application/json" -d '{"lastName":"AA3","firstName":"BB3"}' -X POST 192.168.31.197:8080/demo/users
-    curl 192.168.31.197:8080/demo/users
+Get user list:
+    curl -H "Accept: application/json" -H "Content-type: application/json" -d '{"lastName":"AA3","firstName":"BB3"}' -X POST {your box or VM IP}:8080/demo/users
+Add User:
+    curl {your box or VM IP}:8080/demo/users
 
 

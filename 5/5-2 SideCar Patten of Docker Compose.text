@@ -63,39 +63,30 @@ volumes:
 networks:
     webNet:  
     dataNet:    
-
+CMD:
 docker-compose  up -d
 docker-compose ps
-
+Run Ping CMD:
 docker exec -it -u root jetty9431v1 /bin/bash
     apt-get update && apt-get install iputils-ping 
     apt-get install net-tools
 docker exec -it -u root  wardatav1 /bin/sh
     apk add --no-cache ping
 
-docker container inspect jetty9431v1
-docker container inspect wardatav1
-docker network ls
-docker network inspect dockercompose_dataNet
-docker network inspect dockercompose_webNet
-
-
-
-docker volume rm dockercompose_war-data
-
-docker-compose build --no-cache
-
-docker-compose down -v && docker-compose build --no-cache && docker-compose up
-
-docker-compose down -v
+Inspect container and network:
+    docker container inspect jetty9431v1
+    docker container inspect wardatav1
+    docker network ls
+    docker network inspect dockercompose_dataNet
+    docker network inspect dockercompose_webNet
+    docker volume rm dockercompose_war-data
+    docker-compose build --no-cache
+    docker-compose down -v && docker-compose build --no-cache && docker-compose up
+    docker-compose down -v
 
 Test:
-    curl -H "Accept: application/json" -H "Content-type: application/json" -d '{"lastName":"AA3","firstName":"BB3"}' -X POST 192.168.31.197:8080/demo/users
-    curl 192.168.31.197:8080/demo/users
+Get user list:
+    curl -H "Accept: application/json" -H "Content-type: application/json" -d '{"lastName":"AA3","firstName":"BB3"}' -X POST {your box or VM IP}:8080/demo/users
+Add User:
+    curl {your box or VM IP}:8080/demo/users
 
-
-
-
- WARNING: Image for service jetty-war-data was built because it did not already exist. To rebuild this image you must use `docker-compose build` or `docker-compose up --build`.
-
-https://www.cnblogs.com/sparkdev/p/9826520.html

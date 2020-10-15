@@ -14,14 +14,14 @@ services:
             - '9999:9999'
         image: 'microsservic:v1'
 
-
-docker-compose up -d
-docker-compose down
-docker-compose images
-docker-compose start
-docker-compose stop
-docker-compose logs microsservicv1
-
+CMD:
+    docker-compose up -d
+    docker-compose down
+    docker-compose images
+    docker-compose start
+    docker-compose stop
+    docker-compose logs microsservicv1
+FYI:
 https://docs.docker.com/compose/compose-file/
 
 docker-composeV1.yml
@@ -34,7 +34,7 @@ services:
     container_name: microsservicv1  
     ports:
     - 9999:9999
-
+CMD:
 docker-compose -f docker-composeV1.yml up -d
 docker-compose -f docker-composeV1.yml  down
 
